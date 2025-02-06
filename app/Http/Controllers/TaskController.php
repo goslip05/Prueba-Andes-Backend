@@ -109,4 +109,19 @@ class TaskController extends Controller
             return response()->json($th, 500);
         }
     }
+
+    public function show($id)
+    {
+        try {
+
+            // buscar la tarea en la DB
+            $task = Task::find($id);
+
+            return response()->json($task);
+
+        } catch (\Throwable $th) {
+            Log::info('Error al mostrar la tarea :' . $th);
+            return response()->json($th, 500);
+        }
+    }
 }
