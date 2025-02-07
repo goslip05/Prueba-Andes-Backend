@@ -1,0 +1,2344 @@
+{
+	"info": {
+		"_postman_id": "4425faa4-1956-4e9c-b48a-dea77aad510b",
+		"name": "API Prueba-Andes",
+		"description": "Bienvenido a la documentación del API para la prueba de gestión de tareas de Andes, en ella podras encontrar los endpoints construidos para el funcionamiendo de la misma:\n\n**Autenticación:**\n\n- **Login**: Los usuarios pueden iniciar sesión en el API enviando el correo y la contraseña.\n    \n- **Logout**: Permite a los usuarios cerrar la sesión elmininado el token de autenticación.\n    \n- **Register**: Los usuarios pueden registrarse enviando el nombre, correo y contraseña.\n    \n\n**Tareas:**\n\n- **Creación de Tareas**: Los usuarios pueden añadir nuevas tareas con detalles específicos, incluyendo título, descripción y fecha límite.\n    \n- **Actualización de Tareas**: Permite a los usuarios modificar las tareas existentes para ajustar detalles, cambiar el estado.\n    \n- **Eliminación de Tareas**: Los usuarios pueden eliminar un tarea especifica bien sea completada o que simplemente no quiere tenerla en su lista de tareas.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "18148117",
+		"_collection_link": "https://crimson-equinox-731722.postman.co/workspace/Api-Unilever-J%26J~7265a3b5-442a-437b-b081-4dea4f540f6a/collection/18148117-4425faa4-1956-4e9c-b48a-dea77aad510b?action=share&source=collection_link&creator=18148117"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set(\"TOKEN\", response.access_token);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"{{Guest}}\",\r\n    \"password\":\"{{GuestPass}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/login",
+						"description": "Esta petición es para darle ingreso y autenticar al usuario que se requiere utilizar.\n\nPermite obtener un token de autenticación válido.\n\n**Importante:**\n\n- Los tokens tienen un tiempo de expiración de 1 hora.\n    \n- Las Credenciales de autenticación (_Email y contraseña_) son asignadas al momento que el usuario es registrado.\n    \n- En el response, es indispensable capturar la key llamada \"_**token**_\", es este string encriptado el que debemos añadir como Autorización Bearer Token en los demás servicios.\n    \n- Se pueden visuallizar ejemplos de las difentes respuestas de error y exitosas.\n    \n\n**Campos Requeridos:**\n\n- Email: Correo electronico que se agrego al generar el registro.\n    \n- Password: Contraseña insertada al generar el registro."
+					},
+					"response": [
+						{
+							"name": "Login exitoso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"diego.jimenez205@gmail.com\",\r\n    \"password\":\"Dev2025*\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://prueba-andes-backend.test/api/login"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 18:33:39 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"¡Inicio de sesión exitoso!\",\n    \"access_token\": \"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vcHJ1ZWJhLWFuZGVzLWJhY2tlbmQudGVzdC9hcGkvbG9naW4iLCJpYXQiOjE3Mzg3ODA0MjAsImV4cCI6MTczODc4NDAyMCwibmJmIjoxNzM4NzgwNDIwLCJqdGkiOiJhR0NMcnUwb0gwZzZGYXl6Iiwic3ViIjoiMSIsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.eJRqJUXWM5tjJr_IXLaQln-4REsu0MufNpR4xZlPa_8\",\n    \"token_type\": \"bearer\",\n    \"expires_in\": 3600\n}"
+						},
+						{
+							"name": "correo no resgistrado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"ejemeplo@mail.com\",\r\n    \"password\":\"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/login"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:00:28 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"email\": [\n            \"El Email No está registrado con ese correo electrónico\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "contraseña incorrecta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"{{Admin}}\",\r\n    \"password\":\"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/login"
+							},
+							"status": "Unauthorized",
+							"code": 401,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:02:37 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": [\n        \"El email o el Password son incorrectos\"\n    ]\n}"
+						},
+						{
+							"name": "url incorrecta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Accept",
+										"value": "application/json",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\":\"{{Admin}}\",\r\n    \"password\":\"{{AdminPass}}\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/loginn"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:14:15 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 404,\n    \"message\": \"Error! no se encuentra la url.\"\n}"
+						}
+					]
+				},
+				{
+					"name": "logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{TOKEN}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}api/logout",
+						"description": "Esta petición mediante la API es para cerrar sesion."
+					},
+					"response": [
+						{
+							"name": "url incorrecta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/logoutt"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:14:44 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 404,\n    \"message\": \"Error! no se encuentra la url.\"\n}"
+						},
+						{
+							"name": "Logout exitoso",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/logout"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:17:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"¡Has cerrado sesión exitosamente!\"\n}"
+						}
+					]
+				},
+				{
+					"name": "register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"nuevo usuario\",\r\n    \"email\":\"pruebacreacion@gmail.com\",\r\n    \"password\":\"123456789\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/register",
+						"description": "Esta petición es para registrar a un usuario que se utilizara y requerira sus credenciales mas adelante para cualquier gestion del proyecto.\n\nPermite obtener un token de autenticación válido.\n\nEste usuario a registrar no puede existir previamente, si se evidencia que el correo ya esta previamente registrado este no generara nuevo registro.\n\n**Importante:**\n\n- Los tokens tienen un tiempo de expiración de 1 hora.\n    \n- Las Credenciales (name, _email y password_) Que son requeridos para registrar a cualquier usuario.\n    \n- En el response, es indispensable capturar la key llamada \"_**token**_\", es este string encriptado el que debemos añadir como Autorización Bearer Token en los demás servicios.\n    \n- Se pueden visuallizar ejemplos de las difentes respuestas de error y exitosas.\n    \n\n**Campos Requeridos:**\n\n- Name: Nombre de usuario\n    \n- Email: Correo electronico.\n    \n- Password: Contraseña."
+					},
+					"response": [
+						{
+							"name": "campos requeridos",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://prueba-andes-backend.test/api/register"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:44:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "57"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"name\": [\n            \"El Nombre es obligatorio\"\n        ],\n        \"email\": [\n            \"El Email es obligatorio\"\n        ],\n        \"password\": [\n            \"El Password debe contener al menos 8 caracteres\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "url incorrecta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"prueba creacion\",\r\n    \"email\":\"pruebacreacion@gmail.com\",\r\n    \"password\":\"123456*\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/registeri"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:44:57 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Connection",
+									"value": "close"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": 404,\n    \"message\": \"Error! no se encuentra la url.\"\n}"
+						},
+						{
+							"name": "longitud de contraseña incorrecta",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"prueba creacion\",\r\n    \"email\":\"pruebacreacion@gmail.com\",\r\n    \"password\":\"12345\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/register"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:45:19 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"password\": [\n            \"El Password debe contener al menos 8 caracteres\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "validación de nombre",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": 78878,\r\n    \"email\":\"pruebacreacion@gmail.com\",\r\n    \"password\":\"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/register"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:46:50 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"name\": [\n            \"El Nombre debe ser una cadena de texto\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Validación correo",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"nuevo usuario\",\r\n    \"email\":\"pruebacreacion\",\r\n    \"password\":\"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/register"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:47:40 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"email\": [\n            \"El Email no es Valido\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Usuario registrado exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"nuevo usuario\",\r\n    \"email\":\"pruebacreacion@gmail.com\",\r\n    \"password\":\"123456789\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/register"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 19:48:07 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"!Usuario registrado exitosamente!\",\n    \"user\": {\n        \"name\": \"nuevo usuario\",\n        \"email\": \"pruebacreacion@gmail.com\",\n        \"updated_at\": \"2025-02-05T19:48:08.000000Z\",\n        \"created_at\": \"2025-02-05T19:48:08.000000Z\",\n        \"id\": 3\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Task",
+			"item": [
+				{
+					"name": "store",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{TOKEN}}"
+							}
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Hacer frontend 2\",\r\n    \"description\": \"Cosntruir front en react 2.\",\r\n    \"due_date\": \"2025-02-05\",\r\n    \"status\": \"completada\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/tasks",
+						"description": "Esta petición se utiliza para crear una tarea.\n\nSe requiere un token de autenticación válido que debe ser incluido en el encabezado de la petición.\n\nEste token se obtiene al autenticar al usuario mediante la petición de inicio de sesión y es necesario para acceder a información sensible.  \n**Importante:**\n\n- Los tokens de autenticación tienen una validez de 1 hora. Asegúrate de utilizar un token no expirado.\n    \n- Se pueden visuallizar ejemplos de las difentes respuestas de error y exitosas.\n    \n\n**Campos Requeridos:**\n\n- title: Titulo de la aterea\n    \n- description: Descripción de la tarea.\n    \n- due_date: Fecha de finalizacón.\n    \n- status: Estado de la tarea(pendiente, en progreso y completada)."
+					},
+					"response": [
+						{
+							"name": "token invalido",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Implementar autenticación JWT\",\r\n    \"description\": \"Configurar JWT en el proyecto Laravel para proteger las rutas de la API.\",\r\n    \"due_date\": \"2025-02-04\",\r\n    \"status\": \"pendiente\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://prueba-andes-backend.test/api/tasks"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 04:37:20 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=99"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"invalid token\"\n}"
+						},
+						{
+							"name": "token expirado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n    \"description\": \"Configurar tarea desde guest2.\",\r\n    \"due_date\": \"2025-02-04\",\r\n    \"status\": \"en progreso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 20:39:30 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"Error, el token ha expirado!\"\n}"
+						},
+						{
+							"name": "Validación de campos",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Wed, 05 Feb 2025 23:25:07 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"title\": [\n            \"El Titulo es obligatorio\"\n        ],\n        \"due_date\": [\n            \"La fecha es obligatoria\"\n        ],\n        \"status\": [\n            \"El Estado es obligatorio\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "validación estado",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Tarea desde guest2\",\r\n    \"description\": \"Configurar tarea.\",\r\n    \"due_date\": \"2025-02-05\",\r\n    \"status\": \"terminada\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 00:18:48 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"status\": [\n            \"El Estado deber ser pendiente,en progreso o completada\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Validación titulo",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": 767,\r\n    \"description\": \"Configurar tarea.\",\r\n    \"due_date\": \"2025-02-05\",\r\n    \"status\": \"en progreso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 00:20:18 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"title\": [\n            \"El Nombre debe ser una cadena de texto\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Tarea creada exitosamente",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Tarea Andes\",\r\n    \"description\": \"Tarea para probar el API.\",\r\n    \"due_date\": \"2025-02-05\",\r\n    \"status\": \"pendiente\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks"
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 00:23:14 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"title\": \"Tarea prueba\",\n    \"description\": \"Configurar tarea.\",\n    \"due_date\": \"2025-02-05\",\n    \"status\": \"en progreso\",\n    \"user_id\": 1,\n    \"updated_at\": \"2025-02-06T00:23:15.000000Z\",\n    \"created_at\": \"2025-02-06T00:23:15.000000Z\",\n    \"id\": 1\n}"
+						}
+					]
+				},
+				{
+					"name": "update",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{TOKEN}}"
+							}
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Actualizar Tarea Guest\",\r\n    \"description\": \"Configurar actualización tarea desde guest.\",\r\n    \"due_date\": \"2025-02-05\",\r\n    \"status\": \"en progreso\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/tasks/5",
+						"description": "Esta petición se utiliza para actualizar una tarea.\n\nSe requiere un token de autenticación válido que debe ser incluido en el encabezado de la petición.\n\nEste token se obtiene al autenticar al usuario mediante la petición de inicio de sesión y es necesario para acceder a información sensible.  \n**Importante:**\n\n- Los tokens de autenticación tienen una validez de 1 hora. Asegúrate de utilizar un token no expirado.\n    \n- Se pueden visuallizar ejemplos de las difentes respuestas de error y exitosas.\n    \n\n**Campos Requeridos:**\n\n- title: Titulo de la aterea\n    \n- description: Descripción de la tarea.\n    \n- due_date: Fecha de finalizacón.\n    \n- status: Estado de la tarea(pendiente, en progreso y completada)."
+					},
+					"response": [
+						{
+							"name": "tarea no registrada",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \" Actualizar Tarea Guest\",\r\n    \"description\": \"Configurar actualización tarea desde guest.\",\r\n    \"due_date\": \"2025-02-04\",\r\n    \"status\": \"en progreso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://prueba-andes-backend.test/api/tasks/23"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:06:56 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Tarea no encontrada\"\n}"
+						},
+						{
+							"name": "Validación usuario que edita",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \" Actualizar Tarea Guest\",\r\n    \"description\": \"Configurar actualización tarea desde guest.\",\r\n    \"due_date\": \"2025-02-04\",\r\n    \"status\": \"en progreso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks/5"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:08:28 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"No tienes permisos para editar esta tarea\"\n}"
+						},
+						{
+							"name": "Validación campos",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n \r\n    \"description\": \"Configurar actualización tarea desde guest.\",\r\n    \"due_date\": \"2025-02-04\",\r\n    \"status\": \"en progreso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks/5"
+							},
+							"status": "Unprocessable Content",
+							"code": 422,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:10:02 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"errors\": {\n        \"title\": [\n            \"El Titulo es obligatorio\"\n        ]\n    }\n}"
+						},
+						{
+							"name": "Tarea actualizada exitosamente",
+							"originalRequest": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\": \"Actualizar Tarea Guest\",\r\n    \"description\": \"Configurar actualización tarea desde guest.\",\r\n    \"due_date\": \"2025-02-05\",\r\n    \"status\": \"en progreso\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks/5"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:11:23 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"id\": 5,\n    \"title\": \"Actualizar Tarea Guest\",\n    \"description\": \"Configurar actualización tarea desde guest.\",\n    \"due_date\": \"2025-02-05\",\n    \"status\": \"en progreso\",\n    \"user_id\": 2,\n    \"created_at\": \"2025-02-06T00:39:31.000000Z\",\n    \"updated_at\": \"2025-02-06T01:11:25.000000Z\"\n}"
+						}
+					]
+				},
+				{
+					"name": "delete",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{TOKEN}}"
+							}
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{url}}/api/tasks/6",
+						"description": "Esta petición se utiliza para eliminar una tarea.\n\nSe requiere un token de autenticación válido que debe ser incluido en el encabezado de la petición.\n\nEste token se obtiene al autenticar al usuario mediante la petición de inicio de sesión y es necesario para acceder a información sensible.  \n**Importante:**\n\n- Los tokens de autenticación tienen una validez de 1 hora. Asegúrate de utilizar un token no expirado.\n    \n- Se eliminara la tarea si el usuario autenticado tiene los permisos.\n    \n- Se pueden visuallizar ejemplos de las difentes respuestas de error y exitosas."
+					},
+					"response": [
+						{
+							"name": "Tarea no registrada",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://prueba-andes-backend.test/api/tasks/98"
+							},
+							"status": "Not Found",
+							"code": 404,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:17:05 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"Tarea no encontrada\"\n}"
+						},
+						{
+							"name": "Validación de usuario que elimina la tarea",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks/2"
+							},
+							"status": "Forbidden",
+							"code": 403,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:17:32 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"error\": \"No tienes permisos para eliminar esta tarea\"\n}"
+						},
+						{
+							"name": "Tarea eliminada exitosamente",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "{{url}}/api/tasks/6"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:18:30 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"message\": \"Tarea eliminada exitosamente\"\n}"
+						}
+					]
+				},
+				{
+					"name": "tasks",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{TOKEN}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/tasks?user_id=2&status=pendiente",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"tasks"
+							],
+							"query": [
+								{
+									"key": "user_id",
+									"value": "2"
+								},
+								{
+									"key": "title",
+									"value": "Tarea Andes",
+									"disabled": true
+								},
+								{
+									"key": "status",
+									"value": "pendiente"
+								}
+							]
+						},
+						"description": "Esta petición se utiliza para obtener todas las tareas registradas al usuario autenticado\n\n**Importante:**\n\n- Los tokens de autenticación tienen una validez de 1 hora. Asegúrate de utilizar un token no expirado.\n    \n- Las credenciales de autenticación (correo electrónico y contraseña) se asignan al momento del registro del usuario.\n    \n- La petición recibe parametros para usuario, titulo y estado.\n    \n- Se pueden visuallizar ejemplos de las difentes respuestas de error y exitosas.\n    \n\n**Variables que retornan en el api:**\n\n- Este campo incluirá detalles de la tarea, como su ID, Título de la tarea ,Descripción de la tarea,Fecha límite,Estado de la tarea ."
+					},
+					"response": [
+						{
+							"name": "Petición por usuario",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://prueba-andes-backend.test/api/tasks?user_id=2",
+									"protocol": "http",
+									"host": [
+										"prueba-andes-backend",
+										"test"
+									],
+									"path": [
+										"api",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "2"
+										},
+										{
+											"key": "title",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "pendiente",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:22:03 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 3,\n            \"title\": \"Tarea prueba guest\",\n            \"description\": \"Crear tarea desde user guest.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:37:55.000000Z\",\n            \"updated_at\": \"2025-02-06T00:37:55.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Terminar API\",\n            \"description\": \"Realizar todos las peticiones desd guest.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:38:43.000000Z\",\n            \"updated_at\": \"2025-02-06T00:38:43.000000Z\"\n        },\n        {\n            \"id\": 7,\n            \"title\": \"Hacer frontend\",\n            \"description\": \"Cosntruir front en react.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"en progreso\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:40:39.000000Z\",\n            \"updated_at\": \"2025-02-06T00:40:39.000000Z\"\n        },\n        {\n            \"id\": 8,\n            \"title\": \"Hacer frontend 2\",\n            \"description\": \"Cosntruir front en react 2.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"completada\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:40:56.000000Z\",\n            \"updated_at\": \"2025-02-06T00:40:56.000000Z\"\n        },\n        {\n            \"id\": 5,\n            \"title\": \"Actualizar Tarea Guest\",\n            \"description\": \"Configurar actualización tarea desde guest.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"en progreso\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:39:31.000000Z\",\n            \"updated_at\": \"2025-02-06T01:11:25.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"last\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://prueba-andes-backend.test/api/tasks\",\n        \"per_page\": 5,\n        \"to\": 5,\n        \"total\": 5\n    }\n}"
+						},
+						{
+							"name": "Petición por estado",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/tasks?status=pendiente",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "pendiente"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:23:09 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"Tarea Andes\",\n            \"description\": \"Tarea para probar el API.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 1,\n            \"created_at\": \"2025-02-06T00:24:27.000000Z\",\n            \"updated_at\": \"2025-02-06T00:24:27.000000Z\"\n        },\n        {\n            \"id\": 3,\n            \"title\": \"Tarea prueba guest\",\n            \"description\": \"Crear tarea desde user guest.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:37:55.000000Z\",\n            \"updated_at\": \"2025-02-06T00:37:55.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Terminar API\",\n            \"description\": \"Realizar todos las peticiones desd guest.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:38:43.000000Z\",\n            \"updated_at\": \"2025-02-06T00:38:43.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"last\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://prueba-andes-backend.test/api/tasks\",\n        \"per_page\": 5,\n        \"to\": 3,\n        \"total\": 3\n    }\n}"
+						},
+						{
+							"name": "Petición por titulo",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/tasks?title=Tarea Andes",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "2",
+											"disabled": true
+										},
+										{
+											"key": "title",
+											"value": "Tarea Andes"
+										},
+										{
+											"key": "status",
+											"value": "pendiente",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:24:13 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "59"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 2,\n            \"title\": \"Tarea Andes\",\n            \"description\": \"Tarea para probar el API.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 1,\n            \"created_at\": \"2025-02-06T00:24:27.000000Z\",\n            \"updated_at\": \"2025-02-06T00:24:27.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"last\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://prueba-andes-backend.test/api/tasks\",\n        \"per_page\": 5,\n        \"to\": 1,\n        \"total\": 1\n    }\n}"
+						},
+						{
+							"name": "Petición con filtros",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{url}}/api/tasks?user_id=2&status=pendiente",
+									"host": [
+										"{{url}}"
+									],
+									"path": [
+										"api",
+										"tasks"
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": "2"
+										},
+										{
+											"key": "title",
+											"value": "Tarea Andes",
+											"disabled": true
+										},
+										{
+											"key": "status",
+											"value": "pendiente"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Date",
+									"value": "Thu, 06 Feb 2025 01:24:43 GMT"
+								},
+								{
+									"key": "Server",
+									"value": "Apache/2.4.54 (Win64) OpenSSL/1.1.1t PHP/8.0.28"
+								},
+								{
+									"key": "Vary",
+									"value": "Authorization"
+								},
+								{
+									"key": "X-Powered-By",
+									"value": "PHP/8.0.28"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, private"
+								},
+								{
+									"key": "X-RateLimit-Limit",
+									"value": "60"
+								},
+								{
+									"key": "X-RateLimit-Remaining",
+									"value": "58"
+								},
+								{
+									"key": "Access-Control-Allow-Origin",
+									"value": "*"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5, max=100"
+								},
+								{
+									"key": "Connection",
+									"value": "Keep-Alive"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"data\": [\n        {\n            \"id\": 3,\n            \"title\": \"Tarea prueba guest\",\n            \"description\": \"Crear tarea desde user guest.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:37:55.000000Z\",\n            \"updated_at\": \"2025-02-06T00:37:55.000000Z\"\n        },\n        {\n            \"id\": 4,\n            \"title\": \"Terminar API\",\n            \"description\": \"Realizar todos las peticiones desd guest.\",\n            \"due_date\": \"2025-02-05\",\n            \"status\": \"pendiente\",\n            \"user_id\": 2,\n            \"created_at\": \"2025-02-06T00:38:43.000000Z\",\n            \"updated_at\": \"2025-02-06T00:38:43.000000Z\"\n        }\n    ],\n    \"links\": {\n        \"first\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"last\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n        \"prev\": null,\n        \"next\": null\n    },\n    \"meta\": {\n        \"current_page\": 1,\n        \"from\": 1,\n        \"last_page\": 1,\n        \"links\": [\n            {\n                \"url\": null,\n                \"label\": \"&laquo; Previous\",\n                \"active\": false\n            },\n            {\n                \"url\": \"http://prueba-andes-backend.test/api/tasks?page=1\",\n                \"label\": \"1\",\n                \"active\": true\n            },\n            {\n                \"url\": null,\n                \"label\": \"Next &raquo;\",\n                \"active\": false\n            }\n        ],\n        \"path\": \"http://prueba-andes-backend.test/api/tasks\",\n        \"per_page\": 5,\n        \"to\": 2,\n        \"total\": 2\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	]
+}
