@@ -18,20 +18,20 @@ class TaskController extends Controller
     {
         try {
             $query = Task::query();
-
+   
             // Filtrar por usuario
             if ($request->has('user_id')) {
                 $query->where('user_id', $request->user_id);
             }
 
             // Filtrar por estado 
-            if ($request->has('status')) {
+            if ($request->status != null) {
                 $query->where('status', $request->status);
             }
     
-            // Filtrar por prioridad 
-            if ($request->has('title')) {
-                $query->where('title', $request->title);
+            // Filtrar por title 
+            if ($request->title != null) {
+                $query->where('title', 'LIKE','%'.$request->title.'%');
             }
     
             return new TaskCollection($query->paginate(5));

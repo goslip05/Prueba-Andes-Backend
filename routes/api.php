@@ -38,7 +38,7 @@ Route::middleware('jwt.verify')->group(function () {
     });
 
     //rutas de tareas
-    Route::get('tasks', [TaskController::class, 'index'])->name('task.index');
+    Route::post('get-tasks', [TaskController::class, 'index'])->name('task.index');
     Route::get('task/{id}', [TaskController::class, 'show'])->name('task.show');
     Route::post('tasks', [TaskController::class, 'store'])->name('task.store');
     Route::put('tasks/{id}', [TaskController::class, 'update'])->name('task.update');
