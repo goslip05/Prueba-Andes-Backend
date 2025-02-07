@@ -24,14 +24,22 @@ Route::group([
     'middleware' => 'api',
 
 ], function ($router) {
-    //user
+    //autenticación
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::post('/register', [AuthController::class, 'register'])->name('register');
 });
 
 Route::middleware('jwt.verify')->group(function () {
+    //user
+    Route::get('/user', function (Request $request) {
+        $user = $request->user();
+        $user_role= $user->load('roles');
+        return $user_role;
+    });
+
     //rutas de tareas
     Route::get('tasks', [TaskController::class, 'index'])->name('task.index');
+    Route::get('task/{id}', [TaskController::class, 'show'])->name('task.show');
     Route::post('tasks', [TaskController::class, 'store'])->name('task.store');
     Route::put('tasks/{id}', [TaskController::class, 'update'])->name('task.update');
     Route::delete('tasks/{id}', [TaskController::class, 'delete'])->name('task.delete');
