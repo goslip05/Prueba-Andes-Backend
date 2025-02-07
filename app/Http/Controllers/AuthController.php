@@ -66,7 +66,7 @@ class AuthController extends Controller
             'message' => '¡Inicio de sesión exitoso!',
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => $ttl * 60
+            'expires_in' => $ttl * 1000
         ]);
     }
 
@@ -85,6 +85,7 @@ class AuthController extends Controller
         return response()->json([
             'message' => '!Usuario registrado exitosamente!',
             'user' => $user,
+            'status' => 200
         ], 201);
     }
 }
